@@ -1,0 +1,319 @@
+[gd_scene format=3 uid="uid://bwmkynkh6llo1"]
+
+[ext_resource type="Script" uid="uid://ddbtcbh6g06gj" path="res://godot_files/main_scene.gd" id="1_0f027"]
+
+[node name="MainScene" type="Control" unique_id=1226368498]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0f027")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=252478040]
+
+[node name="MarginGeneral" type="MarginContainer" parent="." unique_id=2127989381]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxGeneral" type="VBoxContainer" parent="MarginGeneral" unique_id=943373672]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginGeneral/VBoxGeneral" unique_id=177952757]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Tuto http"
+horizontal_alignment = 1
+
+[node name="HBoxUrl" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral" unique_id=1522623057]
+layout_mode = 2
+
+[node name="LabelUrl" type="Label" parent="MarginGeneral/VBoxGeneral/HBoxUrl" unique_id=68003191]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "url"
+horizontal_alignment = 2
+
+[node name="InputUrl" type="LineEdit" parent="MarginGeneral/VBoxGeneral/HBoxUrl" unique_id=1402055343]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+placeholder_text = "url"
+virtual_keyboard_type = 7
+
+[node name="HBoxApikey" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral" unique_id=695178963]
+layout_mode = 2
+
+[node name="LabelApikey" type="Label" parent="MarginGeneral/VBoxGeneral/HBoxApikey" unique_id=2133309212]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "apikey (header)"
+horizontal_alignment = 2
+
+[node name="InputApikey" type="LineEdit" parent="MarginGeneral/VBoxGeneral/HBoxApikey" unique_id=2140272970]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+placeholder_text = "apikey"
+virtual_keyboard_type = 6
+secret = true
+
+[node name="MarginCRUD" type="MarginContainer" parent="MarginGeneral/VBoxGeneral" unique_id=513473473]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxCRUD" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD" unique_id=498418284]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxResults" type="VBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD" unique_id=1475656056]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonGet" type="Button" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/VBoxResults" unique_id=1755476530]
+layout_mode = 2
+text = "http GET"
+
+[node name="Console" type="RichTextLabel" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/VBoxResults" unique_id=1799017699]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+vertical_alignment = 2
+
+[node name="VSeparator" type="VSeparator" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD" unique_id=1131819156]
+layout_mode = 2
+
+[node name="CUD" type="TabContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD" unique_id=1563226171]
+layout_mode = 2
+size_flags_horizontal = 3
+current_tab = 1
+
+[node name="Create" type="TabBar" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD" unique_id=322576500]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginCreate" type="MarginContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create" unique_id=1360173448]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxCreate" type="VBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate" unique_id=712981723]
+layout_mode = 2
+
+[node name="HBoxCreateId" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate" unique_id=2063996095]
+layout_mode = 2
+
+[node name="LabelCreateId" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateId" unique_id=775028012]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "id"
+horizontal_alignment = 2
+
+[node name="LineEditCreateId" type="LineEdit" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateId" unique_id=880208684]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+placeholder_text = "Automaticly generated"
+editable = false
+
+[node name="HBoxCreateA" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate" unique_id=662162422]
+layout_mode = 2
+
+[node name="LabelCreateA" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateA" unique_id=1504465771]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "A"
+horizontal_alignment = 2
+
+[node name="LineEditCreateA" type="LineEdit" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateA" unique_id=482135194]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+placeholder_text = "string"
+
+[node name="HBoxCreateB" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate" unique_id=1880549405]
+layout_mode = 2
+
+[node name="LabelCreateB" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateB" unique_id=733854329]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "B
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckCreateB" type="CheckBox" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateB" unique_id=1175870470]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "boolean"
+
+[node name="HBoxCreateC" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate" unique_id=200421710]
+layout_mode = 2
+
+[node name="LabelCreateC" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateC" unique_id=2129403921]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SpinBoxCreateC" type="SpinBox" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate/HBoxCreateC" unique_id=484946413]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+max_value = 16.0
+rounded = true
+
+[node name="ButtonCreate" type="Button" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Create/MarginCreate/VBoxCreate" unique_id=420216364]
+layout_mode = 2
+text = "http POST"
+
+[node name="Update" type="TabBar" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD" unique_id=1192461225]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginUpdate" type="MarginContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update" unique_id=438964009]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxUpdate" type="VBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate" unique_id=697863123]
+layout_mode = 2
+
+[node name="HBoxUpdateId" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate" unique_id=524648973]
+layout_mode = 2
+
+[node name="LabelUpdateId" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateId" unique_id=1191477818]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "id"
+horizontal_alignment = 2
+
+[node name="LineEditUpdateId" type="LineEdit" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateId" unique_id=430372104]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+placeholder_text = "copy pasta or guess"
+
+[node name="HBoxUpdateA" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate" unique_id=780698942]
+layout_mode = 2
+
+[node name="LabeUpdateA" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateA" unique_id=1435285595]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "A"
+horizontal_alignment = 2
+
+[node name="LineEditUpdateA" type="LineEdit" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateA" unique_id=1892635828]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+placeholder_text = "string"
+
+[node name="HBoxUpdateB" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate" unique_id=707794124]
+layout_mode = 2
+
+[node name="LabelUpdateB" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateB" unique_id=889380212]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "B
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckUpdateB" type="CheckBox" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateB" unique_id=780055341]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "boolean"
+
+[node name="HBoxUpdateC" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate" unique_id=2007140183]
+layout_mode = 2
+
+[node name="LabelUpdateC" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateC" unique_id=1737921094]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SpinBoxUpdateC" type="SpinBox" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate/HBoxUpdateC" unique_id=752429292]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+max_value = 16.0
+rounded = true
+
+[node name="ButtonUpdatePatch" type="Button" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Update/MarginUpdate/VBoxUpdate" unique_id=646814498]
+layout_mode = 2
+text = "http PATCH"
+
+[node name="Delete" type="TabBar" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD" unique_id=2126224407]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginDelete" type="MarginContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete" unique_id=478978513]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxDelete" type="VBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete/MarginDelete" unique_id=1775185176]
+layout_mode = 2
+
+[node name="HBoxDeleteId" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete/MarginDelete/VBoxDelete" unique_id=741406824]
+layout_mode = 2
+
+[node name="LabelDeleteId" type="Label" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete/MarginDelete/VBoxDelete/HBoxDeleteId" unique_id=1658218858]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "id"
+horizontal_alignment = 2
+
+[node name="LineEditDeleteId" type="LineEdit" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete/MarginDelete/VBoxDelete/HBoxDeleteId" unique_id=532749547]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+
+[node name="ButtonDelete" type="Button" parent="MarginGeneral/VBoxGeneral/MarginCRUD/HBoxCRUD/CUD/Delete/MarginDelete/VBoxDelete" unique_id=34382607]
+layout_mode = 2
+text = "http DELETE"
