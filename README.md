@@ -1,7 +1,5 @@
 # Tuto HTTP with Supabase
 
-<img src="https://github.com/Mugule/TutoHttp/blob/main/godot_francophone_icon.png" alt="Icon of the best godot community" width="200"/>
-
 Hi everyone, welcome to this tutorial where you will learn the very basics of HTTP requests and how to set up an external database with Supabase. I did the Godot project on 4.6.2 but I'm pretty sure that you can load this on all Godot 4.+ editors. 
 
 * [Some theory](#theory)
