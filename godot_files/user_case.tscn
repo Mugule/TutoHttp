@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://chqlsujo3kaxf"]
+
+[ext_resource type="Script" uid="uid://53bpneuyfr15" path="res://godot_files/user_case.gd" id="1_6wvfn"]
+
+[node name="UserCase" type="Control" unique_id=1324147781]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6wvfn")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1175882901]
+
+[node name="MarginGeneral" type="MarginContainer" parent="." unique_id=1647824350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxGeneral" type="VBoxContainer" parent="MarginGeneral" unique_id=87602340]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginGeneral/VBoxGeneral" unique_id=1044363885]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "User Case"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginGeneral/VBoxGeneral" unique_id=193032004]
+layout_mode = 2
+
+[node name="HBoxUserId" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral" unique_id=517259756]
+layout_mode = 2
+
+[node name="LabelUserId" type="Label" parent="MarginGeneral/VBoxGeneral/HBoxUserId" unique_id=1393553487]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user ID"
+horizontal_alignment = 2
+
+[node name="LineEditUserId" type="LineEdit" parent="MarginGeneral/VBoxGeneral/HBoxUserId" unique_id=1708650035]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="HBoxPassword" type="HBoxContainer" parent="MarginGeneral/VBoxGeneral" unique_id=1498458660]
+layout_mode = 2
+
+[node name="LabelPassword" type="Label" parent="MarginGeneral/VBoxGeneral/HBoxPassword" unique_id=2027066969]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "password"
+horizontal_alignment = 2
+
+[node name="LineEditPassword" type="LineEdit" parent="MarginGeneral/VBoxGeneral/HBoxPassword" unique_id=1752197439]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+secret = true
