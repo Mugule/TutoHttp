@@ -24,7 +24,11 @@ An HTTP request is a message sent by a client to a server. A request is composed
 
 Client <- Response (server or error)
 
-After sending your request, you get a response. Even if the server does not receive the request or you get something goes wrong with parameters. You get a response. And this is why HTTP is really easy to use because you can understand what goes wrong. The response gets a code. I will not list all of them here you can find them on the net easily. The most common is when you made an error on a URL, 404: not found.
+After sending your request, you get a response. Even if the server does not receive the request or you get something goes wrong with parameters. You get a response. And this is why HTTP is really easy to use because you can understand what goes wrong. The response gets a code. I will not list all of them here you can find them on the net easily. In short for what we need with examples:
+
+* 2xx : Succes (201 Accepted)
+* 4xx : Error from client (401 Unauthorized)
+* 5xx : Error from server (500 Internal Server Error)
 
 ### Method
 
@@ -44,7 +48,7 @@ Create an account then come back here.
 ### Create project
 
 > [!CAUTION]
-> For the tutorial and the rest of the project, I turn off RLS. This is a very VERY BAD practice for production but here we just want to test. This exposes all your API to everyone but simplify testing.
+> For the tutorial and the rest of the project, I turn off RLS and give all permission to the public API key. This is a very VERY BAD practice for production but here we just want to test. This exposes all your API to everyone but simplify testing.
 
 First of all create project !
 
@@ -110,9 +114,6 @@ Here get the id of your project (the url on the top left) and you can find the A
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_project_dashboard_for_finding_apikey.png" alt="Dashboard where is the API button" width="640"/>
 
 Now to construct the url we need, we just have to add `/rest/v1/` to the url that we copied and then the table name, for example we can have `https://estuvraimententraindelireca.supabase.co/rest/v1/form`.
-
-> [!TIP]
-> I destroyed all my project and table so don't try to request it.
 
 ## Godot
 
@@ -193,15 +194,14 @@ Supabase is way way deeper than what I just show you here. You can request table
 
 ### Godot application
 
-> [!IMPORTANT]
-> Reminder : be very careful of the law in application and be sure to inform the player of the data sent. For example in Europe, if we can identify the player you enter in the GDPR section and trust me, you don't want to. More information on this example on [EU website](https://eur-lex.europa.eu/EN/legal-content/summary/general-data-protection-regulation-gdpr.html)
-
 That's said, here some ideas :
 
 * Forms at the end of the demo directly in your game. No more Google Forms !
 * You can take some data during the play of each level. Like this, if the player quits the game, you will know it. For example create a row in a player table, take the id (unique) and put a new row in another table with the level data (player, time to do some objective, score...).
 * Lobbies can easily be done here then you can connect player with P2P. The hard things here is security.
 * Don't forget that data can be read too ! With a bit of engineering you can easily do a turn based cross-platform combat. The hard things here is security.
+
+But if you want to do this online, you will need some Authentification and good RLS policies.
 
 This tutorial is open to suggestion, feel free to add more schema or anything you think can be useful !
 
