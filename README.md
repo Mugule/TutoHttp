@@ -230,7 +230,7 @@ Let's do the sign-up function. Please take care of the end of the URL, this is `
 ```
 func sign_up(email : String, password : String) :
 	var url_sign_in = project_url + "/auth/v1/signup"
-	var headers = [
+	var header = [
 		"Content-Type: application/json",
 		"apikey:" + api_public_key
 	]
@@ -239,7 +239,7 @@ func sign_up(email : String, password : String) :
 		"password": password
 	}
 	var json_body = JSON.stringify(body)
-	http.request(url_sign_in, headers, HTTPClient.METHOD_POST, json_body)
+	http.request(url_sign_in, header, HTTPClient.METHOD_POST, json_body)
 ```
 
 After that the user will receive a mail. If you dont configure it adn let all by default, the user will be redirected on a local host kind of stuff. This is fine because the link work and the account created will be confirmed anyway.
@@ -249,7 +249,7 @@ After that you have to log in with the new account (you can do this automaticly 
 ```
 func log_in(email : String, password : String) :
 	var url_token = project_url + "/auth/v1/token?grant_type=password"
-	var headers = [
+	var header = [
 		"Content-Type: application/json",
 		"apikey:" + api_public_key
 	]
@@ -258,7 +258,7 @@ func log_in(email : String, password : String) :
 		"password": password
 	}
 	var json_body = JSON.stringify(body)
-	http.request(url_token, headers, HTTPClient.METHOD_POST, json_body)
+	http.request(url_token, header, HTTPClient.METHOD_POST, json_body)
 ```
 
 This function will return a `acces_token` that we need.
@@ -291,6 +291,18 @@ func post_data_with_my_super_token(data_to_post : Dictionary) :
 See this like a ticket to enter in the table. The API key identifies your project, but authentication and RLS protect your data. Even if someone extracts your public API key from your game, they won’t be able to do actions without valid authentication and matching policies. Well, they can DDOS you but who can't?
 
 I don't do this here but it works the same with GodotSteam. You can ask him a ticket, add specific Supabase `Edge Functions` that will test the ticket with `OpenID` Steam API then authorize the user to do whatever he want.
+
+Oh ! Last but not least, don't forget to log out user... We never know :
+
+```
+func log_out() : 
+	var url_log_out = project + "/auth/v1/logout"
+	var header = [
+		"Authorization: Bearer " + access_token,
+		"apikey:"+api_public_key
+	]
+	http.request(url_log_out, header, HTTPClient.METHOD_POST)
+```
 
 This tutorial is open to suggestion, feel free to add more schema or anything you think can be useful !
 
