@@ -109,17 +109,21 @@ Cool ! We get a database with an API to request. Now we have to get two things :
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_project_dashboard_way_to_go.png" alt="Project Dashboard UX where to click" width="200"/>
 
-Here get the id of your project (the url on the top left) and you can find the API keys at the bottom right of the dashboard. You can take the public API key because we disable every security.
+Here get the id of your project (the url on the top left) and you can find the API keys at the bottom right of the dashboard. You can take the publishable API key because we disable every security.
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_project_dashboard_for_finding_apikey.png" alt="Dashboard where is the API button" width="640"/>
 
 Now to construct the url we need, we just have to add `/rest/v1/` to the url that we copied and then the table name, for example we can have `https://estuvraimententraindelireca.supabase.co/rest/v1/form`.
 
+> But wait, do you provide hardcode the API key? Are you nuts?
+
+Yes I hardcode only the publishable API key. But here this is dangerous because we disable security. At the end we will see a leaderdoard example where non authentified user can't post things even with a key. If you want more information on that subject, go on [Understanding API keys](https://supabase.com/docs/guides/api/api-keys) docs from Supabase.
+
 ## Godot
 
 ### The project
 
-So, let's open the godot project. I let you check the [`main_scene.gd`](https://github.com/Mugule/TutoHttp/blob/main/godot_files/main_scene.gd) script and the comments. Pay attention to the `on_get_pressed`, `on_created_pressed`, `on_update_pressed` and `on_delete_pressed` functions. Everything is on it. After that, you can launch the project and I will show you the main use cases covered.
+So, let's open the godot project. I will copy pasta the function from [`main_scene.gd`](https://github.com/Mugule/TutoHttp/blob/main/godot_files/main_scene.gd) script and the comments here. Pay attention to the `on_get_pressed`, `on_created_pressed`, `on_update_pressed` and `on_delete_pressed` functions. Everything is on it. After that, you can launch the project and I will show you the main use cases covered.
 
 The application is a sandbox, play with it. For this tutorial you will find :
 * On the top, general parameters (url + apikey to put in the header)
@@ -133,10 +137,11 @@ Note : Update could have boolean to patch only the value needed because it's a "
 First of all, the "GET" method. We will put our URL and  API key directly in the panel. You can prefill them before the launch in the `MainScene` node export variables. When you press the GET Button, a request is sent to the server. If it succeeds, MainScene get triggered by the `HTTPRequest` when it gets a response with all the elements in it.
 
 In short, this is what happens :
--> Press button GET (click)
--> Send Request (function)
--> Get Response (signal trigger)
--> Print it on console (function)
+
+* Press button GET (click)
+* Send Request (function)
+* Get Response (signal triggered)
+* Print it on console (function)
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/godot_get.png" alt="Gimme data from table" width="640"/>
 
@@ -192,7 +197,7 @@ Supabase is way way deeper than what I just show you here. You can request table
 
 > Cool, but what now? What can I do with that for video games? I mean, we are here for Godot not data !
 
-### Godot application
+### Video Games application
 
 That's said, here some ideas :
 
@@ -201,11 +206,94 @@ That's said, here some ideas :
 * Lobbies can easily be done here then you can connect player with P2P. The hard things here is security.
 * Don't forget that data can be read too ! With a bit of engineering you can easily do a turn based cross-platform combat. The hard things here is security.
 
-But if you want to do this online, you will need some Authentification and good RLS policies.
+> [!WARNING]
+> Before sending HTTP requests in a real application, you usually need an authentication layer. This means that instead of directly accessing your database with a public API key, users must first prove who they are (for example with email/password, OAuth, etc.). Once authenticated, they receive a token that will be included in future requests.
+
+### Only user can write but anyone can see
+
+Now let's try to put a bit of security to our application. In the Authentification panel on Supabase, we will set our policies in a way that `anon` (for anonymus user) can only read and `authentificated` (for logged user) can post new row in your database. This is important because the public API key is not meant to be secret. It can safely be exposed in a client (like a Godot game) as long as proper security rules are enforced on the server side. In Supabase, this is handled with Row Level Security (RLS) policies, which define what an authenticated user is allowed to read or modify.
+
+Ok, now let's add new policy with RLS activated.
+
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_new_policy" alt="New Policy" width="640"/>
+
+Here we can see our two policy.
+
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_policies" alt="New Policy" width="640"/>
+
+So, how does it works? When a user connect, he can only see data, if he sign up. Then log in, the server will send him a temporary token to use to "POST" data on the table. But take care, by default Supabase enable email confirmation and can be annoying for player. All of this is define in the `Sign in / Provider` panel.
+
+I don't put it in project because i'm to lazy to do UI here. But I will show you some function. You will need to declare two `var`(or `const`) to make it works : `project_url` and `api_public_key`. If you need junky but functionnal mail you can go on [YOPMail](https://yopmail.com/).
+
+Let's do the sign-up function. Please take care of the end of the URL, this is `/auth/v1/signup` and not `/rest/v1/`.
+
+```
+func sign_up(email : String, password : String) :
+	var url_sign_in = project_url + "/auth/v1/signup"
+	var headers = [
+		"Content-Type: application/json",
+		"apikey:" + api_public_key
+	]
+	var body = {
+		"email": email,
+		"password": password
+	}
+	var json_body = JSON.stringify(body)
+	http.request(url_sign_in, headers, HTTPClient.METHOD_POST, json_body)
+```
+
+After that the user will receive a mail. If you dont configure it adn let all by default, the user will be redirected on a local host kind of stuff. This is fine because the link work and the account created will be confirmed anyway.
+
+After that you have to log in with the new account (you can do this automaticly if you don't use the mail confirmation part). Again the end of the URL change to `/auth/v1/token?grant_type=password`.
+
+```
+func log_in(email : String, password : String) :
+	var url_token = project_url + "/auth/v1/token?grant_type=password"
+	var headers = [
+		"Content-Type: application/json",
+		"apikey:" + api_public_key
+	]
+	var body = {
+		"email": email,
+		"password": password
+	}
+	var json_body = JSON.stringify(body)
+	http.request(url_token, headers, HTTPClient.METHOD_POST, json_body)
+```
+
+This function will return a `acces_token` that we need.
+
+```
+{ 
+    "access_token": "eyJhbGciOiJF ... 2s4UH3tZHWQ", 
+    "token_type": "bearer", 
+    "expires_in": 3600.0, 
+    "expires_at": 1775728749.0, 
+    "refresh_token": "cxvd ... oeb6", 
+    "user": { 
+        ...
+    }
+}
+```
+
+After that you will able to post data with the `acces_token` receive. To use it, you will need to add a new parameters in the `PackedStringArray` header like this : `Authorization: Bearer + acces_token`. The server will see if the user is authorized to post data or not on the specific table.
+
+```
+func post_data_with_my_super_token(data_to_post : Dictionary) :
+	var header : PackedStringArray = [
+		"Authorization: Bearer " + access_token,
+		"apikey:" + api_public_key
+		]
+	var json = JSON.stringify(data_to_post)
+	http.request(url, header, HTTPClient.METHOD_POST, json)
+```
+
+See this like a ticket to enter in the table. The API key identifies your project, but authentication and RLS protect your data. Even if someone extracts your public API key from your game, they won’t be able to do actions without valid authentication and matching policies. Well, they can DDOS you but who can't?
+
+I don't do this here but it works the same with GodotSteam. You can ask him a ticket, add specific Supabase `Edge Functions` that will test the ticket with `OpenID` Steam API then authorize the user to do whatever he want.
 
 This tutorial is open to suggestion, feel free to add more schema or anything you think can be useful !
 
 Take care and see ya !
 
 *Mugule*
-
