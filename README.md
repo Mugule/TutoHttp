@@ -14,6 +14,8 @@ Hi everyone, welcome to this tutorial where you will learn the very basics of HT
 
 First of all a bit of theory. 
 
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/pixel_schema_request_response.png" alt="Basics" width="320"/>
+
 ### Requests
 
 Request (client) -> Server
@@ -93,9 +95,11 @@ Insert some values.
 
 ### RLS Settings
 
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/pixel_schema_rls.png" alt="RLS is like a bodyguard" width="320"/>
+
 Go to the RLS dashboard.
 
-<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_rls_dashboard.png" alt="RLS Dashboard" width="640"/>
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_rls_dashboard.png" alt="RLS dashboard" width="320"/>
 
 Here we can create some policies for each condition, this is the SQL version of the POST/GET/PATCH/PUT/DELETE.
 
@@ -209,17 +213,21 @@ That's said, here some ideas :
 > [!WARNING]
 > Before sending HTTP requests in a real application, you usually need an authentication layer. This means that instead of directly accessing your database with a public API key, users must first prove who they are (for example with email/password, OAuth, etc.). Once authenticated, they receive a token that will be included in future requests.
 
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/pixel_schema_godotsteam.png" alt="Ticket system with GodotSteam" width="320"/>
+
+Abode you can see an example of ticket that can be done with GodotSteam assets and EdgeFunction on Supabase
+
 ### Only user can write but anyone can see
 
 Now let's try to put a bit of security to our application. In the Authentification panel on Supabase, we will set our policies in a way that `anon` (for anonymus user) can only read and `authentificated` (for logged user) can post new row in your database. This is important because the public API key is not meant to be secret. It can safely be exposed in a client (like a Godot game) as long as proper security rules are enforced on the server side. In Supabase, this is handled with Row Level Security (RLS) policies, which define what an authenticated user is allowed to read or modify.
 
 Ok, now let's add new policy with RLS activated.
 
-<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_new_policy" alt="New Policy" width="640"/>
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_new_policy.png" alt="New Policy" width="640"/>
 
 Here we can see our two policy.
 
-<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_policies" alt="New Policy" width="640"/>
+<img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/supabase_leaderboard_policies.png" alt="New Policy" width="640"/>
 
 So, how does it works? When a user connect, he can only see data, if he sign up. Then log in, the server will send him a temporary token to use to "POST" data on the table. But take care, by default Supabase enable email confirmation and can be annoying for player. All of this is define in the `Sign in / Provider` panel.
 
