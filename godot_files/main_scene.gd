@@ -74,7 +74,7 @@ func _ready() -> void :
 ## With this we send an http request to the url set on the top of the app with
 ## the apikey in the header if it exists. The header is additional parameters
 ## to provide to the server via the http request. Be careful, don't hardcode
-## API key, don't be like shitty AI code for god sake please! If no method is
+## acces_token or security, don't be like AI code please! If no method is
 ## specified on http.request, it will be a "GET" method. 
 func on_get_pressed() :
 	if url.text.is_empty() :
