@@ -134,6 +134,14 @@ The application is a sandbox, play with it. For this tutorial you will find :
 * On the left, a button "GET" to request your database and a console that prints response from the `HTTPRequest` node.
 * On the right, three tabs to create, update or delete data.
 
+We will show every response of our request on the left side (good and bad ones). If you want to handle erro. Know that `http.request()` return the response when recieved. So you can do something like this :
+
+```
+error = http_request.request(url, header, HTTPClient.METHOD_POST, body)
+if error != OK:
+	push_error("An error occurred in the HTTP request.")
+```
+
 Note : Update could have boolean to patch only the value needed because it's a "PATCH" method and not a "PUT" (reminder : "PUT" method needs all information). But I just wanted to make it simple.
 
 ### Read and Post
@@ -149,11 +157,55 @@ In short, this is what happens :
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/godot_get.png" alt="Gimme data from table" width="640"/>
 
+Here the code :
+
+```
+## With this we send an http request to the url set on the top of the app with
+## the apikey in the header if it exists. The header is additional parameters
+## to provide to the server via the http request. Be careful, don't hardcode
+## acces_token or security, don't be like AI code please! If no method is
+## specified on http.request, it will be a "GET" method.
+func on_get_pressed() :
+	if url.text.is_empty() :
+		output_text("No url provided")
+	else :
+		if apikey.text.is_empty() :
+			output_separator()
+			output_text("Request (nokey) : " + url.text)
+		else :
+			output_separator()
+			output_text("Request (apikey) : " + url.text)
+			var header : PackedStringArray = ["apikey:"+apikey.text]
+			http.request(url.text, header)
+```
+
 And this happens everytime you press the button. If you did something wrong, the `HTTPRequest` will send back a Response with an error code and some info on the body. For example, let's do that without API key.
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/godot_get_error_401_no_apikey.png" alt="No API key? all fine, you just get an error" width="640"/>
 
 Here you can see that we get `error 401 : No API key found in request`. Not all API need an API key and some need some authentication methods or user-id. We will not cover that in this tutorial.
+
+The code : 
+
+```
+## Please provide url or nothing happens. First you need to construct your data
+## in a Dictionary to give a JSON like for API, then you convert it in a String
+## format (like RPC). In the end you send it with "POST" method.
+func on_create_pressed() :
+	if url.text.is_empty() or apikey.text.is_empty() :
+		output_text("No url or apikey provided")
+	else :
+		var new_data : Dictionary = {
+			"a" : create_a.text,
+			"b" : create_b.button_pressed,
+			"c" : int(create_c.value) # here i force int because i choose int2
+			}
+		var json = JSON.stringify(new_data)
+		output_separator()
+		output_text("New form requested")
+		var header : PackedStringArray = ["apikey:"+apikey.text]
+		http.request(url.text, header, HTTPClient.METHOD_POST, json)
+```
 
 If you want you can put other data with the tabs "Create". Feel free to push the "GET" button again to see the results.
 
@@ -178,9 +230,59 @@ When we send the request, the server will respond "OK cool bro" with the code `2
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/godot_update.png" alt="Update worked" width="640"/>
 
+The code :
+
+```
+## Update is more trickier, we need to know the id of the row to update it. You
+## can do a request to your base to get the correct id. Here we just suppose
+## that you know it. If you don't, you can push the button get. When you get the
+## id you filter the request on it with `?id=eq.`
+##
+## Two method exist to update a row, PUT and PATCH :
+## * PUT: completely replaces the row, you need the good format
+## * PATCH: partially updates the row with given values, just the specified part
+func on_update_patch_pressed() :
+	if url.text.is_empty() or apikey.text.is_empty() :
+		output_text("No url or apikey provided")
+	else :
+		if update_id.text.is_empty() :
+			output_text("Need id to update")
+		else :
+			var url_update : String = url.text + "?id=eq." + update_id.text
+			var new_data : Dictionary = {
+				"a" : update_a.text,
+				"b" : update_b.button_pressed,
+				"c" : int(update_c.value) # here i force int because i choose int2
+				}
+			var json = JSON.stringify(new_data)
+			output_separator()
+			output_text("Update on " + url_update)
+			var header : PackedStringArray = ["apikey:"+apikey.text]
+			http.request(url_update, header, HTTPClient.METHOD_PATCH, json)
+```
+
 Same thing for the DELETE. I do a GET to see the base, with the right `id` I select the row and I delete it. I press GET to see the results.
 
 <img src="https://github.com/Mugule/TutoHttp/blob/main/screenshots/godot_delete.png" alt="Delete this" width="640"/>
+
+Ezpz :
+
+```
+## Delete is easy... so this is dangerous. You just have to filter your request
+## the use "DELETE" method. Like update, we do that with `?id=eq.`.
+func on_delete_pressed() :
+	if url.text.is_empty() or apikey.text.is_empty() :
+		output_text("No url or apikey provided")
+	else :
+		if delete_id.text.is_empty() :
+			output_text("Need id to delete")
+		else :
+			var url_update : String = url.text + "?id=eq." + delete_id.text
+			output_separator()
+			output_text("Update on " + url_update)
+			var header : PackedStringArray = ["apikey:"+apikey.text]
+			http.request(url_update, header, HTTPClient.METHOD_DELETE)
+```
 
 > [!TIP]
 > But what if we apply several filter when we delete or patch? What if we apply a filter on a get ? What if I spam create button and don't wait for Response? Well, enjoy testing!
