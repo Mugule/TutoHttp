@@ -83,6 +83,7 @@ func on_get_pressed() :
 		if apikey.text.is_empty() :
 			output_separator()
 			output_text("Request (nokey) : " + url.text)
+			http.request(url.text)
 		else :
 			output_separator()
 			output_text("Request (apikey) : " + url.text)

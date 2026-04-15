@@ -375,14 +375,14 @@ This function will return a `acces_token` that we need.
 
 ```
 { 
-    "access_token": "eyJhbGciOiJF ... 2s4UH3tZHWQ", 
-    "token_type": "bearer", 
-    "expires_in": 3600.0, 
-    "expires_at": 1775728749.0, 
-    "refresh_token": "cxvd ... oeb6", 
-    "user": { 
-        ...
-    }
+	"access_token": "eyJhbGciOiJF ... 2s4UH3tZHWQ", 
+	"token_type": "bearer", 
+	"expires_in": 3600.0, 
+	"expires_at": 1775728749.0, 
+	"refresh_token": "cxvd ... oeb6", 
+	"user": { 
+		...
+	}
 }
 ```
 
